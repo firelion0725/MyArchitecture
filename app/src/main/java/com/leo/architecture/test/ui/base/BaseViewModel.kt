@@ -1,0 +1,85 @@
+package com.leo.architecture.test.ui.base
+
+import android.util.Log
+import androidx.lifecycle.*
+import io.reactivex.SingleObserver
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
+
+/**
+ * @author Leo.ZhangTJ
+ * @time 2020/4/15
+ * @function
+ * @describe
+ */
+open class BaseViewModel : ViewModel(), LifecycleObserver {
+
+    private val TAG = javaClass.simpleName
+
+    protected var subscriptions: CompositeDisposable = CompositeDisposable()
+
+    open fun <T> singleObserver(
+        p: (t: T) -> Unit,
+        ex: (e: Throwable) -> Unit
+    ): SingleObserver<T> {
+        return object : SingleObserver<T> {
+            override fun onSubscribe(d: Disposable) {
+                subscriptions.add(d)
+            }
+
+            override fun onSuccess(t: T) {
+                p.invoke(t)
+            }
+
+            override fun onError(e: Throwable) {
+                ex.invoke(e)
+            }
+        }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        if (!subscriptions.isDisposed) {
+            subscriptions.dispose()
+        }
+    }
+
+    // ****************** lifeCycle ******************
+    open fun bindLifecycle(lifecycleOwner: LifecycleOwner) {
+        lifecycleOwner.lifecycle.addObserver(this)
+    }
+
+    open fun unbindLifecycle(lifecycleOwner: LifecycleOwner) {
+        lifecycleOwner.lifecycle.removeObserver(this)
+    }
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
+    protected open fun onCreate() {
+        Log.i(TAG, "======onCreate======")
+    }
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_START)
+    protected open fun onStart() {
+        Log.i(TAG, "======onStart======")
+    }
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
+    protected open fun onResume() {
+        Log.i(TAG, "======onResume======")
+    }
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
+    protected open fun onPause() {
+        Log.i(TAG, "======onPause======")
+    }
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
+    protected open fun onStop() {
+        Log.i(TAG, "======onStop======")
+    }
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
+    protected open fun onDestroy() {
+        Log.i(TAG, "======onDestroy======")
+    }
+}

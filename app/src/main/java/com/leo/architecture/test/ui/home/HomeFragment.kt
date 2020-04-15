@@ -4,11 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.Observer
 import com.leo.architecture.test.R
 import com.leo.architecture.test.databinding.FragmentHomeBinding
 import com.leo.architecture.test.ui.base.BaseFragment
-import kotlinx.android.synthetic.main.fragment_home.*
 
 class HomeFragment : BaseFragment() {
 
@@ -28,8 +26,14 @@ class HomeFragment : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         homeViewModel = getViewModel(HomeViewModel::class.java)
+        lifecycle.addObserver(homeViewModel)
         viewDataBinding.homeViewModel = homeViewModel
         viewDataBinding.lifecycleOwner = this
         homeViewModel.setMessageText("welcome home")
+    }
+
+    override fun onDestroy() {
+        lifecycle.removeObserver(homeViewModel)
+        super.onDestroy()
     }
 }
