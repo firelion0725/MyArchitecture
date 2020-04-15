@@ -2,11 +2,14 @@ package com.leo.architecture.test.ui.home
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.leo.architecture.test.data.api.GankApiRepository
+import com.leo.architecture.test.data.model.BannerTitleModel
 import com.leo.architecture.test.ui.base.BaseViewModel
-import io.reactivex.SingleObserver
-import io.reactivex.disposables.Disposable
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.lang.Exception
 
 class HomeViewModel : BaseViewModel() {
 
@@ -17,7 +20,21 @@ class HomeViewModel : BaseViewModel() {
 //        message.set(str)
         messageLiveData.value = str
 //        Log.i("aaaaaaaaaaaa","message: $message")
-        Log.i("aaaaaaaaaaaa", "message: $messageLiveData.value")
+        Log.i("aaaaaaaaaaaa", "message: ${messageLiveData.value}")
+    }
+
+    fun getBanners2() {
+        GlobalScope.launch(Dispatchers.IO) {
+            try {
+                val data: BannerTitleModel = GankApiRepository.getBanners().blockingGet()
+                withContext(Dispatchers.Main) {
+                    setMessageText("${data.status}")
+                }
+            } catch (e:Exception) {
+                println(e.message)
+            }
+
+        }
     }
 
     fun getBanners() {
@@ -29,8 +46,6 @@ class HomeViewModel : BaseViewModel() {
                 println(it.message)
             }))
     }
-
-
 
 
 }
