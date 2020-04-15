@@ -16,8 +16,8 @@ object GankApiRepository {
 
     private val api: GankApi = RetrofitManger.instance.create(GankApi::class.java)
 
-    public fun getBanners(): Single<BannerTitleModel> {
-        return api.getBanners().compose(singleCompile())
+    fun getBanners(): Single<BannerTitleModel> {
+        return api.getBanners()
     }
 
 }
