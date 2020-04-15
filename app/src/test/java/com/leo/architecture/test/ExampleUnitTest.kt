@@ -14,6 +14,10 @@ class ExampleUnitTest {
 
     @Test
     fun t() {
+        test { paramFun2() }
+        test5(5) {
+            a(it)
+        }
 //        test { paramFun2() }
 //        println("${test2("aaaaaaaaa").invoke("aaaaaaaaa")}")
 //        println("${test2("aaaaaaa243534aa").invoke("aaaaaaa243534aa")}")
@@ -25,6 +29,15 @@ class ExampleUnitTest {
 //            paramFun2()
 //        }.invoke(paramFun2()))
 
+    }
+
+    private fun a(n: Int): Int {
+        return n + 10
+    }
+
+    private fun test5(num1: Int, p: (Int) -> Int) {
+        val result = p.invoke(num1)
+        print("$result")
     }
 
     private fun test4(p: () -> Int): (Int) -> String {
@@ -81,18 +94,20 @@ class ExampleUnitTest {
         return mulit * add(num1, num2) + square(num2)
     }
 
-    @Test
-    public fun ttt() {
-//        val result1 = sum(0.5, 5, 96) { num1, num2 ->
-//            num1 + num2
-//        }
-//
-//        println("$result1")
+    private fun addd(num1: Int, num2: Int): Int {
+        return num1 + num2
+    }
 
-        val result2 = sum2(0.3, 2, 4,
-            { num1, num2 -> num1 + num2 },
-            { num2 -> (num2 * num2) })
-        println("$result2")
+    @Test
+    fun ttt() {
+        val result1 = sum(0.5, 5, 96) { it1, it2 -> addd(it1, it2) }
+
+        println("$result1")
+
+//        val result2 = sum2(0.3, 2, 4,
+//            { num1, num2 -> num1 + num2 },
+//            { num2 -> (num2 * num2) })
+//        println("$result2")
     }
 
 
