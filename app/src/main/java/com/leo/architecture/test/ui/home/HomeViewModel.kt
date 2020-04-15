@@ -10,7 +10,7 @@ import io.reactivex.disposables.Disposable
 
 class HomeViewModel : BaseViewModel() {
 
-    public var messageLiveData: MutableLiveData<String?> = MutableLiveData<String?>()
+    var messageLiveData: MutableLiveData<String?> = MutableLiveData<String?>()
 //    var message: ObservableField<String?> = ObservableField()
 
     fun setMessageText(str: String) {
