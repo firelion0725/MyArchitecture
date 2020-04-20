@@ -1,8 +1,9 @@
 package com.leo.architecture.test.data
 
-import com.readystatesoftware.chuck.BuildConfig
+import android.util.Log
 import com.readystatesoftware.chuck.ChuckInterceptor
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import java.util.concurrent.TimeUnit
 
 /**
@@ -26,9 +27,25 @@ object OkHttpManger {
                 .readTimeout(TIME_OUT, TimeUnit.SECONDS)
                 .writeTimeout(TIME_OUT, TimeUnit.SECONDS)
         if (BuildConfig.DEBUG) {
+            builder.addNetworkInterceptor(getHttpLogInterceptor())
             builder.addInterceptor(ChuckInterceptor(DataManger.getApplication()))
         }
+
         return builder.build()
+    }
+
+
+    class HttpLogger : HttpLoggingInterceptor.Logger {
+
+        override fun log(message: String) {
+            Log.d("OK http ===", message) //okHttp的详细日志会打印出来
+        }
+    }
+
+    private fun getHttpLogInterceptor(): HttpLoggingInterceptor {
+        val interceptor = HttpLoggingInterceptor(HttpLogger())
+        interceptor.level = HttpLoggingInterceptor.Level.BODY
+        return interceptor
     }
 
 
