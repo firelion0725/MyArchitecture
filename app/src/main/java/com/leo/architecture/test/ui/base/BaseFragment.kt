@@ -4,23 +4,22 @@ import androidx.annotation.NonNull
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProvider.NewInstanceFactory
+import java.lang.reflect.ParameterizedType
 
 /**
  * @author Leo.ZhangTJ
- * @time 2020/4/14
+ * @time 2020/4/20
  * @function
  * @describe
  */
-
 open class BaseFragment : Fragment() {
 
-    private var sInstance: NewInstanceFactory? = null
-    fun getViewModelInstance(): NewInstanceFactory {
+    private var sInstance: ViewModelProvider.NewInstanceFactory? = null
+    fun getViewModelInstance(): ViewModelProvider.NewInstanceFactory {
         if (sInstance == null) {
             sInstance = ViewModelProvider.NewInstanceFactory();
         }
-        return sInstance as NewInstanceFactory;
+        return sInstance as ViewModelProvider.NewInstanceFactory;
     }
 
     fun <T : ViewModel> getViewModel(@NonNull modelClass: Class<T>): T {

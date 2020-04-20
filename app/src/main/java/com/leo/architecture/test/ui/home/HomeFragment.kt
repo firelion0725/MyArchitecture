@@ -1,39 +1,32 @@
 package com.leo.architecture.test.ui.home
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import com.leo.architecture.test.R
 import com.leo.architecture.test.databinding.FragmentHomeBinding
-import com.leo.architecture.test.ui.base.BaseFragment
+import com.leo.architecture.test.ui.base.BaseArchitectureFragment
 
-class HomeFragment : BaseFragment() {
+class HomeFragment : BaseArchitectureFragment<FragmentHomeBinding, HomeViewModel>() {
 
-    private lateinit var homeViewModel: HomeViewModel
-    private lateinit var viewDataBinding: FragmentHomeBinding
+    override fun getLayoutId(): Int {
+        return R.layout.fragment_home
+    }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        val root = inflater.inflate(R.layout.fragment_home, container, false)
-        viewDataBinding = FragmentHomeBinding.bind(root)
-        return viewDataBinding.root
+    override fun createBinding(v: View): FragmentHomeBinding {
+        return FragmentHomeBinding.bind(v)
+    }
+
+    override fun createViewModel(): HomeViewModel {
+        return getViewModel(HomeViewModel::class.java)
+    }
+
+    override fun bindingWithViewModel() {
+        binding.viewModel = viewModel
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        homeViewModel = getViewModel(HomeViewModel::class.java)
-        lifecycle.addObserver(homeViewModel)
-        viewDataBinding.homeViewModel = homeViewModel
-        viewDataBinding.lifecycleOwner = this
-        homeViewModel.setMessageText("welcome home")
+        viewModel.setMessageText("welcome")
     }
 
-    override fun onDestroy() {
-        lifecycle.removeObserver(homeViewModel)
-        super.onDestroy()
-    }
 }
