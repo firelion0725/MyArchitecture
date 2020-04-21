@@ -36,7 +36,7 @@ dependencies {
 
     implementation("com.squareup.okhttp3:okhttp:${rootProject.ext.okhttp}")
     implementation("com.squareup.okhttp3:logging-interceptor:${rootProject.ext.okhttp}")
-    implementation("com.squareup.retrofit2:retrofit:${rootProject.ext.retrofit}")
+    api("com.squareup.retrofit2:retrofit:${rootProject.ext.retrofit}")
     implementation "com.squareup.retrofit2:adapter-rxjava2:${rootProject.ext.retrofit}"
     implementation "com.squareup.retrofit2:converter-gson:${rootProject.ext.retrofit}"
 

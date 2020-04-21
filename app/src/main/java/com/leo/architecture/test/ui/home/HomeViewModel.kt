@@ -10,17 +10,14 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.lang.Exception
+import retrofit2.HttpException
 
 class HomeViewModel : BaseViewModel() {
 
     var messageLiveData: MutableLiveData<String?> = MutableLiveData<String?>()
-//    var message: ObservableField<String?> = ObservableField()
 
     fun setMessageText(str: String) {
-//        message.set(str)
         messageLiveData.value = str
-//        Log.i("aaaaaaaaaaaa","message: $message")
         Log.i("aaaaaaaaaaaa", "message: ${messageLiveData.value}")
     }
 
@@ -31,7 +28,10 @@ class HomeViewModel : BaseViewModel() {
                 withContext(Dispatchers.Main) {
                     setMessageText("${data.status}")
                 }
-            } catch (e:Exception) {
+            } catch (e: Exception) {
+                if (e is HttpException) {
+                    val httpException = handleHttpException(e, "getBanners")
+                }
                 println(e.message)
             }
 

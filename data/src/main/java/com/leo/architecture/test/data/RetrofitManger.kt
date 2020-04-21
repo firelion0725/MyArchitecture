@@ -16,7 +16,7 @@ object RetrofitManger {
 
     val instance: Retrofit = create()
 
-    fun create(): Retrofit {
+    private fun create(): Retrofit {
         return Retrofit.Builder()
             .baseUrl(baseUrl)
             .client(OkHttpManger.instance)

@@ -2,9 +2,11 @@ package com.leo.architecture.test.ui.base
 
 import android.util.Log
 import androidx.lifecycle.*
+import com.leo.architecture.test.data.model.error.ErrorHttpModel
 import io.reactivex.SingleObserver
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
+import retrofit2.HttpException
 
 /**
  * @author Leo.ZhangTJ
@@ -17,6 +19,14 @@ open class BaseViewModel : ViewModel(), LifecycleObserver {
     private val TAG = javaClass.simpleName
 
     protected var subscriptions: CompositeDisposable = CompositeDisposable()
+
+    open fun handleHttpException(e: HttpException, tag: String): ErrorHttpModel {
+        val status = e.code()
+        val message = e.message()
+        val data = e.response()?.errorBody()?.source()?.readByteString()?.utf8()
+
+        return ErrorHttpModel(status, message, tag)
+    }
 
     open fun <T> singleObserver(
         p: (t: T) -> Unit,

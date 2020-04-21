@@ -35,7 +35,7 @@ object OkHttpManger {
     }
 
 
-    class HttpLogger : HttpLoggingInterceptor.Logger {
+    private class HttpLogger : HttpLoggingInterceptor.Logger {
 
         override fun log(message: String) {
             Log.d("OK http ===", message) //okHttp的详细日志会打印出来
