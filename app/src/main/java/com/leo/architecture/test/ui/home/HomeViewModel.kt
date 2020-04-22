@@ -34,7 +34,6 @@ class HomeViewModel : BaseViewModel() {
                 }
                 println(e.message)
             }
-
         }
     }
 

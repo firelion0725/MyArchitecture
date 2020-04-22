@@ -4,24 +4,19 @@ import android.os.Bundle
 import android.view.View
 import com.leo.architecture.test.R
 import com.leo.architecture.test.databinding.FragmentHomeBinding
+import com.leo.architecture.test.databinding.FragmentHomeBindingImpl
 import com.leo.architecture.test.ui.base.BaseArchitectureFragment
 
-class HomeFragment : BaseArchitectureFragment<FragmentHomeBinding, HomeViewModel>() {
+class HomeFragment : BaseArchitectureFragment<FragmentHomeBindingImpl, HomeViewModel>() {
 
     override fun getLayoutId(): Int {
         return R.layout.fragment_home
     }
 
-    override fun createBinding(v: View): FragmentHomeBinding {
-        return FragmentHomeBinding.bind(v)
-    }
-
-    override fun createViewModel(): HomeViewModel {
-        return getViewModel(HomeViewModel::class.java)
-    }
-
-    override fun bindingWithViewModel() {
+    override fun createBinding(v: View): FragmentHomeBindingImpl {
+        val binding = FragmentHomeBinding.bind(v) as FragmentHomeBindingImpl
         binding.viewModel = viewModel
+        return binding
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
