@@ -21,6 +21,8 @@ import java.lang.reflect.Type
 abstract class BaseArchitectureFragment<VBD : ViewDataBinding, VM : BaseViewModel> :
     BaseFragment() {
 
+    private lateinit var viewModelClassType: Class<VM>
+
     protected lateinit var binding: VBD
     protected lateinit var viewModel: VM
 
@@ -60,25 +62,21 @@ abstract class BaseArchitectureFragment<VBD : ViewDataBinding, VM : BaseViewMode
         val cons: Array<Constructor<VBD>> = classType.constructors as Array<Constructor<VBD>>;
         val instance = cons[0].newInstance(compact, v)
 
-        val methods = classType.methods
-        for(m in methods){
-            println(m.name)
-        }
-
+        val setMethod = classType.getMethod("setViewModel", viewModelClassType)
+        setMethod.invoke(instance, viewModel)
         return instance
     }
 
     private fun createBindingWithVm(): VM {
-        val classType: Class<VM>
         val superClass: Type = javaClass.genericSuperclass
         val type = (superClass as ParameterizedType).actualTypeArguments[1]
-        classType = if (type is ParameterizedType) {
+        viewModelClassType = if (type is ParameterizedType) {
             type.rawType as Class<VM>
         } else {
             type as Class<VM>
         }
 
-        return classType.newInstance()
+        return viewModelClassType.newInstance()
     }
 
     abstract fun getLayoutId(): Int
