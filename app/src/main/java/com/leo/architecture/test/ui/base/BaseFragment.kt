@@ -4,7 +4,6 @@ import androidx.annotation.NonNull
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import java.lang.reflect.ParameterizedType
 
 /**
  * @author Leo.ZhangTJ

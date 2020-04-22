@@ -6,7 +6,7 @@
     <data>
 
         <variable
-            name="viewModel"
+            name="aaa"
             type="com.leo.architecture.test.ui.home.HomeViewModel" />
 
     </data>
@@ -24,7 +24,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
-            android:text="@{String.valueOf(viewModel.messageLiveData)}"
+            android:text="@{String.valueOf(aaa.messageLiveData)}"
             android:textAlignment="center"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -35,7 +35,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="@{()->viewModel.getBanners2()}"
+            android:onClick="@{()->aaa.getBanners2()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

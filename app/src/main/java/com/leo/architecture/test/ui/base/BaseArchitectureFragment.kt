@@ -34,13 +34,9 @@ abstract class BaseArchitectureFragment<VBD : ViewDataBinding, VM : BaseViewMode
         val root = inflater.inflate(getLayoutId(), container, false)
         viewModel = createBindingWithVm()
         binding = createBindingWithVBD(root);
-        return binding.root
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
         lifecycle.addObserver(viewModel)
         binding.lifecycleOwner = this
+        return binding.root
     }
 
     override fun onDestroy() {
@@ -49,26 +45,42 @@ abstract class BaseArchitectureFragment<VBD : ViewDataBinding, VM : BaseViewMode
     }
 
     private fun createBindingWithVBD(v: View): VBD {
+        //获取泛型的class type
         val classType: Class<VBD>
-        val superClass: Type = javaClass.genericSuperclass
+        val superClass: Type? = javaClass.genericSuperclass
         val type = (superClass as ParameterizedType).actualTypeArguments[0]
         classType = if (type is ParameterizedType) {
             type.rawType as Class<VBD>
         } else {
             type as Class<VBD>
         }
-
+        //通过名称获取 泛型实例的class type
+        val className = classType.name + "Impl"
+        val cl = Class.forName(className)
+        //反射获得构造方法 构造实例
         val compact = DataBindingUtil.getDefaultComponent()
-        val cons: Array<Constructor<VBD>> = classType.constructors as Array<Constructor<VBD>>;
+        val cons: Array<Constructor<VBD>> = cl.constructors as Array<Constructor<VBD>>;
         val instance = cons[0].newInstance(compact, v)
+        //获取setViewModel 方法
+        val methods = cl.methods
+        for (m in methods) {
+            if (m.name.startsWith("set")) {
+                val paramType = m.parameterTypes[0]
+                if (paramType.name == viewModelClassType.name) {
+                    m.invoke(instance, viewModel)
+                    break
+                }
+            }
+        }
 
-        val setMethod = classType.getMethod("setViewModel", viewModelClassType)
-        setMethod.invoke(instance, viewModel)
+
+//        val setMethod = cl.getMethod("setViewModel", viewModelClassType)
+//        setMethod.invoke(instance, viewModel)
         return instance
     }
 
     private fun createBindingWithVm(): VM {
-        val superClass: Type = javaClass.genericSuperclass
+        val superClass: Type? = javaClass.genericSuperclass
         val type = (superClass as ParameterizedType).actualTypeArguments[1]
         viewModelClassType = if (type is ParameterizedType) {
             type.rawType as Class<VM>
@@ -80,5 +92,4 @@ abstract class BaseArchitectureFragment<VBD : ViewDataBinding, VM : BaseViewMode
     }
 
     abstract fun getLayoutId(): Int
-//    abstract fun createBinding(v: View): VBD
 }
