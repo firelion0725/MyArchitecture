@@ -1,31 +1,25 @@
 package com.leo.architecture.test.ui.dashboard
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.lifecycle.Observer
+import com.leo.architecture.test.GlideApp
 import com.leo.architecture.test.R
-import com.leo.architecture.test.ui.base.BaseFragment
+import com.leo.architecture.test.databinding.FragmentDashboardBinding
+import com.leo.architecture.test.ui.base.BaseArchitectureFragment
 import kotlinx.android.synthetic.main.fragment_dashboard.*
 
-class DashboardFragment : BaseFragment() {
+class DashboardFragment : BaseArchitectureFragment<FragmentDashboardBinding,DashboardViewModel>() {
 
-    private lateinit var dashboardViewModel: DashboardViewModel
+    private val url = "https://dss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2868081268,3128738317&fm=26&gp=0.jpg"
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_dashboard, container, false)
+    override fun getLayoutId(): Int {
+        return R.layout.fragment_dashboard
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        dashboardViewModel = getViewModel(DashboardViewModel::class.java)
-        dashboardViewModel.text.observe(viewLifecycleOwner, Observer {
-            text_dashboard.text = it
-        })
+        GlideApp.with(this)
+            .load(url)
+            .fitCenter()
+            .into(image);
     }
 }
