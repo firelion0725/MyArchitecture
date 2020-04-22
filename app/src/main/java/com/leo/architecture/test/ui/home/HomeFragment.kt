@@ -13,14 +13,15 @@ class HomeFragment : BaseArchitectureFragment<FragmentHomeBindingImpl, HomeViewM
         return R.layout.fragment_home
     }
 
-    override fun createBinding(v: View): FragmentHomeBindingImpl {
-        val binding = FragmentHomeBinding.bind(v) as FragmentHomeBindingImpl
-        binding.viewModel = viewModel
-        return binding
-    }
+//    override fun createBinding(v: View): FragmentHomeBindingImpl {
+//        val binding = FragmentHomeBinding.bind(v) as FragmentHomeBindingImpl
+//        binding.viewModel = viewModel
+//        return binding
+//    }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        binding.viewModel = viewModel
         viewModel.setMessageText("welcome")
     }
 
