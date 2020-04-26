@@ -1,10 +1,10 @@
 package com.leo.architecture.test.ui.dashboard
 
 import android.os.Bundle
-import com.leo.architecture.test.GlideApp
 import com.leo.architecture.test.R
 import com.leo.architecture.test.databinding.FragmentDashboardBinding
 import com.leo.architecture.test.ui.base.BaseArchitectureFragment
+import com.leo.thirdlib.glide.GlideApp
 import kotlinx.android.synthetic.main.fragment_dashboard.*
 
 class DashboardFragment : BaseArchitectureFragment<FragmentDashboardBinding,DashboardViewModel>() {

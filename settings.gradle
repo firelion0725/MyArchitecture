@@ -1,3 +1,4 @@
 rootProject.name='MyArchitecture'
 include ':app'
 include ':data'
+include ':thirdlib'

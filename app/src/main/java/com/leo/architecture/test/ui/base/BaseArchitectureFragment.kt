@@ -55,8 +55,14 @@ abstract class BaseArchitectureFragment<VBD : ViewDataBinding, VM : BaseViewMode
             type as Class<VBD>
         }
         //通过名称获取 泛型实例的class type
-        val className = classType.name + "Impl"
-        val cl = Class.forName(className)
+        val cl: Class<*> = if (classType.name.endsWith("Impl")) {
+            //证明直接传入的泛型为实现类 可以直接用
+            Class.forName(classType.name);
+        } else {
+            val className = classType.name + "Impl"
+            Class.forName(className)
+        }
+
         //反射获得构造方法 构造实例
         val compact = DataBindingUtil.getDefaultComponent()
         val cons: Array<Constructor<VBD>> = cl.constructors as Array<Constructor<VBD>>;
