@@ -19,7 +19,7 @@ class BaiduLocation(var context: Context?) : LocationModule {
     private fun initOption(ms: Int): LocationClientOption {
         val option = LocationClientOption()
         option.locationMode = LocationClientOption.LocationMode.Hight_Accuracy
-        option.setScanSpan(0)
+        option.setScanSpan(ms)
         option.isOpenGps = true
         option.setIgnoreKillProcess(false)
         option.SetIgnoreCacheException(false)
