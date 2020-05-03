@@ -3,7 +3,7 @@
 /build
 
 # idea
-.idea
+/.idea/
 *.iml
 local.properties
 out/
