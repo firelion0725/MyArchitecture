@@ -4,6 +4,7 @@ import android.os.Bundle
 import com.baidu.location.BDLocation
 import com.leo.architecture.test.R
 import com.leo.architecture.test.databinding.FragmentHomeBinding
+import com.leo.architecture.test.ndk.TestNdk
 import com.leo.architecture.test.ui.base.BaseArchitectureFragment
 import com.leo.thirdlib.aspectj.annotation.Record
 import com.leo.thirdlib.location.BaiduLocation
@@ -20,7 +21,8 @@ class HomeFragment : BaseArchitectureFragment<FragmentHomeBinding, HomeViewModel
     @Record
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel.setMessageText("welcome")
+//        viewModel.setMessageText("welcome")
+        viewModel.setMessageText(TestNdk.getStringFromC())
 
         locationClient = BaiduLocation(this.activity?.applicationContext)
         locationClient.init(1000) { location ->
