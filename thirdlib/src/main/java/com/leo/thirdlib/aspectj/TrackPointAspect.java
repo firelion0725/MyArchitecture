@@ -39,7 +39,9 @@ public class TrackPointAspect {
             joinPoint.proceed();
         } catch (Throwable throwable) {
             throwable.printStackTrace();
+            System.out.println(joinPoint.getTarget().toString() + " throwable");
         }
+        System.out.println(joinPoint.getTarget().toString() + " click end");
     }
 
 }
