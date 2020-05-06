@@ -17,6 +17,7 @@ class HomeFragment : BaseArchitectureFragment<FragmentHomeBinding, HomeViewModel
         return R.layout.fragment_home
     }
 
+    @Record
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel.setMessageText("welcome")

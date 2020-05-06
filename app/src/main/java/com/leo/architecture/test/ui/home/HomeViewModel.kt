@@ -6,6 +6,7 @@ import com.leo.architecture.test.data.api.GankApiRepository
 import com.leo.architecture.test.data.comm.singleCompile
 import com.leo.architecture.test.data.model.BannerTitleModel
 import com.leo.architecture.test.ui.base.BaseViewModel
+import com.leo.thirdlib.aspectj.annotation.RecordClick
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -21,6 +22,8 @@ class HomeViewModel : BaseViewModel() {
         Log.i("aaaaaaaaaaaa", "message: ${messageLiveData.value}")
     }
 
+
+    @RecordClick
     fun getBanners2() {
         GlobalScope.launch(Dispatchers.IO) {
             try {

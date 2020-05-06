@@ -18,6 +18,10 @@ public class TrackPointAspect {
     public void trackPoint() {
     }
 
+    @Pointcut("execution(@com.leo.thirdlib.aspectj.annotation.RecordClick * *(..))")
+    public void trackPointClick() {
+    }
+
     @Around("trackPoint()")
     public void aroundTrackPoint(final ProceedingJoinPoint joinPoint) {
         System.out.println(joinPoint.getTarget().toString() + " Start");
@@ -26,8 +30,16 @@ public class TrackPointAspect {
         } catch (Throwable throwable) {
             throwable.printStackTrace();
         }
+    }
 
-        System.out.println(joinPoint.getTarget().toString() + " finish");
+    @Around("trackPointClick()")
+    public void aroundTrackPointClick(final ProceedingJoinPoint joinPoint) {
+        System.out.println(joinPoint.getTarget().toString() + " click Start");
+        try {
+            joinPoint.proceed();
+        } catch (Throwable throwable) {
+            throwable.printStackTrace();
+        }
     }
 
 }
