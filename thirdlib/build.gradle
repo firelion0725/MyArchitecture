@@ -43,4 +43,6 @@ dependencies {
     api files('libs/BaiduLBS_Android.jar')
     api 'com.github.firelion0725:MyUtils:1.3.0'
 
+    api 'org.aspectj:aspectjrt:1.9.2'
+
 }
