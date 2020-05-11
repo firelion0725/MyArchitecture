@@ -79,9 +79,6 @@ abstract class BaseArchitectureFragment<VBD : ViewDataBinding, VM : BaseViewMode
             }
         }
 
-
-//        val setMethod = cl.getMethod("setViewModel", viewModelClassType)
-//        setMethod.invoke(instance, viewModel)
         return instance
     }
 

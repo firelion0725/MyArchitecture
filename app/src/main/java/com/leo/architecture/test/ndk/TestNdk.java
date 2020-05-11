@@ -12,4 +12,6 @@ public class TestNdk {
     }
 
     public static native String getStringFromC();
+
+    public static native int getSum(int a, int b);
 }

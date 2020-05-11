@@ -1,8 +1,9 @@
 package com.leo.architecture.test.ui.base
 
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import com.leo.utils.ScreenUtils
 
 /**
  * @author Leo.ZhangTJ
@@ -13,12 +14,16 @@ import com.leo.utils.ScreenUtils
 abstract class BaseActivity : AppCompatActivity() {
 
     private val targetDp = 360
+    open lateinit var view: View
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 //        ScreenUtils.adapterScreen(this, targetDp, false)
-        setContentView(getLayoutId())
+        view = LayoutInflater.from(this).inflate(getLayoutId(), null, false)
     }
 
     abstract fun getLayoutId(): Int
+
+
+
 }
