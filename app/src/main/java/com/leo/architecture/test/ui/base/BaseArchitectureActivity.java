@@ -6,6 +6,7 @@ import android.view.View;
 import androidx.databinding.DataBindingComponent;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
+import androidx.lifecycle.ViewModel;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -25,11 +26,16 @@ public abstract class BaseArchitectureActivity<VBD extends ViewDataBinding, VM e
     private VBD viewDataBinding;
     private VM viewModel;
 
+    public void setViewModel(VM viewModel) {
+        this.viewModel = viewModel;
+    }
+
     private Class<VM> viewModelClzz;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         createViewModel();
         createDataBinding(view);
         getLifecycle().addObserver(viewModel);
@@ -77,6 +83,9 @@ public abstract class BaseArchitectureActivity<VBD extends ViewDataBinding, VM e
     }
 
     private void createViewModel() {
+        if (viewModel != null) {
+            return;
+        }
         ParameterizedType superClassType = (ParameterizedType) this.getClass().getGenericSuperclass();
         if (superClassType != null) {
             Type type = superClassType.getActualTypeArguments()[1];
@@ -89,7 +98,8 @@ public abstract class BaseArchitectureActivity<VBD extends ViewDataBinding, VM e
             viewModelClzz = clzz;
         }
         try {
-            viewModel = viewModelClzz.newInstance();
+            Constructor<?>[] constructors = viewModelClzz.getConstructors();
+            viewModel = (VM) constructors[0].newInstance(this.getApplication());
         } catch (Exception e) {
             e.printStackTrace();
         }

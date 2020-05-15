@@ -21,10 +21,10 @@ import java.lang.reflect.Type
 abstract class BaseArchitectureFragment<VBD : ViewDataBinding, VM : BaseViewModel> :
     BaseFragment() {
 
-    private lateinit var viewModelClassType: Class<VM>
+    private var viewModelClassType: Class<VM>? = null
 
     protected lateinit var binding: VBD
-    protected lateinit var viewModel: VM
+    protected var viewModel: VM? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,19 +32,24 @@ abstract class BaseArchitectureFragment<VBD : ViewDataBinding, VM : BaseViewMode
         savedInstanceState: Bundle?
     ): View? {
         val root = inflater.inflate(getLayoutId(), container, false)
-        viewModel = createBindingWithVm()
+        setViewModel()
         binding = createBindingWithVBD(root);
-        lifecycle.addObserver(viewModel)
+        viewModel?.apply {
+            lifecycle.addObserver(this)
+        }
         binding.lifecycleOwner = this
         return binding.root
     }
 
     override fun onDestroy() {
-        lifecycle.removeObserver(viewModel)
+        viewModel?.let { lifecycle.removeObserver(it) }
         super.onDestroy()
     }
 
     private fun createBindingWithVBD(v: View): VBD {
+        if (viewModelClassType == null) {
+            viewModelClassType = viewModel?.javaClass!!
+        }
         //获取泛型的class type
         val classType: Class<VBD>
         val superClass: Type? = javaClass.genericSuperclass
@@ -72,7 +77,7 @@ abstract class BaseArchitectureFragment<VBD : ViewDataBinding, VM : BaseViewMode
         for (m in methods) {
             if (m.name.startsWith("set")) {
                 val paramType = m.parameterTypes[0]
-                if (paramType.name == viewModelClassType.name) {
+                if (paramType.name == viewModelClassType?.name) {
                     m.invoke(instance, viewModel)
                     break
                 }
@@ -90,8 +95,12 @@ abstract class BaseArchitectureFragment<VBD : ViewDataBinding, VM : BaseViewMode
         } else {
             type as Class<VM>
         }
+        val cons = viewModelClassType?.constructors
+        return cons?.get(0)?.newInstance(activity?.application) as VM
+    }
 
-        return viewModelClassType.newInstance()
+    open fun setViewModel() {
+        viewModel = createBindingWithVm()
     }
 
     abstract fun getLayoutId(): Int

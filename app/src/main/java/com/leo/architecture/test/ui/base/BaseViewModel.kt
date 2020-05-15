@@ -1,5 +1,6 @@
 package com.leo.architecture.test.ui.base
 
+import android.app.Application
 import android.util.Log
 import androidx.lifecycle.*
 import com.leo.architecture.test.data.model.error.ErrorHttpModel
@@ -14,7 +15,7 @@ import retrofit2.HttpException
  * @function
  * @describe
  */
-open class BaseViewModel : ViewModel(), LifecycleObserver {
+open class BaseViewModel(open var app: Application) : AndroidViewModel(app), LifecycleObserver {
 
     private val TAG = javaClass.simpleName
 

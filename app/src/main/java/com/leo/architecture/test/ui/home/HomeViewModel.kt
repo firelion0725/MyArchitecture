@@ -1,5 +1,6 @@
 package com.leo.architecture.test.ui.home
 
+import android.app.Application
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.leo.architecture.test.data.api.GankApiRepository
@@ -13,7 +14,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 
-class HomeViewModel : BaseViewModel() {
+class HomeViewModel(application: Application) : BaseViewModel(application) {
 
     var messageLiveData: MutableLiveData<String?> = MutableLiveData<String?>()
 

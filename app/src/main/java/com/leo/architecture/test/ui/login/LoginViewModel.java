@@ -1,7 +1,11 @@
 package com.leo.architecture.test.ui.login;
 
+import android.app.Application;
+import android.content.Intent;
+
 import androidx.lifecycle.MutableLiveData;
 
+import com.leo.architecture.test.MainActivity;
 import com.leo.architecture.test.ui.base.BaseViewModel;
 
 /**
@@ -12,7 +16,8 @@ import com.leo.architecture.test.ui.base.BaseViewModel;
  */
 public class LoginViewModel extends BaseViewModel {
 
-    public LoginViewModel() {
+    public LoginViewModel(Application application) {
+        super(application);
         init();
     }
 
@@ -22,5 +27,10 @@ public class LoginViewModel extends BaseViewModel {
 
     public MutableLiveData<String> loginLiveData = new MutableLiveData<>();
 
+    public void gotoMain() {
+        Intent intent = new Intent(getApp(), MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        getApp().startActivity(intent);
+    }
 
 }

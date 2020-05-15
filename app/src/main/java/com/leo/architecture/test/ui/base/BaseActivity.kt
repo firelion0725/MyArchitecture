@@ -20,6 +20,7 @@ abstract class BaseActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 //        ScreenUtils.adapterScreen(this, targetDp, false)
         view = LayoutInflater.from(this).inflate(getLayoutId(), null, false)
+        setContentView(view)
     }
 
     abstract fun getLayoutId(): Int
