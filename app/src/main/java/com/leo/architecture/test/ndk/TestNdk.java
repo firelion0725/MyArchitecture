@@ -8,7 +8,7 @@ package com.leo.architecture.test.ndk;
  */
 public class TestNdk {
     static {
-        System.loadLibrary("native-lib");
+        System.loadLibrary("leo-lib");
     }
 
     public static native String getStringFromC();

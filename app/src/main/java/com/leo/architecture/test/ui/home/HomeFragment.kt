@@ -22,7 +22,7 @@ class HomeFragment : BaseArchitectureFragment<FragmentHomeBinding, HomeViewModel
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 //        viewModel.setMessageText("welcome")
-        viewModel?.setMessageText(TestNdk.getStringFromC())
+        viewModel?.setMessageText(TestNdk.getStringFromC()+TestNdk.getSum(2,9))
 
         locationClient = BaiduLocation(this.activity?.applicationContext)
         locationClient.init(1000) { location ->
