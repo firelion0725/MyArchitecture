@@ -1,5 +1,7 @@
 package com.leo.architecture.test.ndk;
 
+import android.content.Context;
+
 /**
  * @author Leo.ZhangTJ
  * @time 2020/4/28
@@ -14,4 +16,6 @@ public class TestNdk {
     public static native String getStringFromC();
 
     public static native int getSum(int a, int b);
+
+    public static native void showToast(Context context,String string);
 }
