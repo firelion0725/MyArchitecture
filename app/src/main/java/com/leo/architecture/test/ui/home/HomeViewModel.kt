@@ -50,7 +50,7 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
     }
 
     fun getBanners() {
-        setMessageText("125468")
+//        setMessageText("125468")
         GankApiRepository.getBanners()
             .compose(singleCompile())
             .subscribe(singleObserver({
