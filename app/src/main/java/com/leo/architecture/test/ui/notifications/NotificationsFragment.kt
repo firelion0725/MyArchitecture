@@ -25,7 +25,7 @@ class NotificationsFragment : BaseFragment() {
         super.onActivityCreated(savedInstanceState)
         notificationsViewModel = getViewModel(NotificationsViewModel::class.java)
         notificationsViewModel.text.observe(viewLifecycleOwner, Observer {
-            text_notifications.text = it
+            motion_layout.transitionToEnd()
         })
     }
 }

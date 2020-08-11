@@ -2,6 +2,7 @@ package com.leo.architecture.test.ui.dashboard
 
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.leo.architecture.test.R
 import com.leo.architecture.test.databinding.FragmentDashboardBinding
 import com.leo.architecture.test.ui.base.BaseArchitectureFragment
@@ -22,7 +23,9 @@ class DashboardFragment : BaseArchitectureFragment<FragmentDashboardBinding, Das
         GlideApp.with(this)
             .load(url)
             .fitCenter()
-            .into(image);
+            .diskCacheStrategy(DiskCacheStrategy.DATA)
+            .into(image)
+
     }
 
     //自己去定制viewmodel 初始化
