@@ -1,3 +1,4 @@
+include ':apm'
 rootProject.name='MyArchitecture'
 include ':app'
 include ':data'
